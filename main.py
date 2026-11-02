@@ -15,6 +15,6 @@ if __name__ == '__main__':
     else:
         import tkinter as tk
         from lanzador import Launcher
-        root = tk.Tk()
+        root = tk.Tk(className='Udpbd-ps2-server')
         Launcher(root)
         root.mainloop()

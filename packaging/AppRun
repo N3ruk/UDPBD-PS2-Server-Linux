@@ -1,6 +1,7 @@
 #!/bin/sh
 set -eu
 HERE=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+export BAMF_DESKTOP_FILE_HINT="$HERE/udpbd-ps2-server.desktop"
 unset PYTHONHOME PYTHONPATH TCL_LIBRARY TK_LIBRARY
 export TCL_LIBRARY="$HERE/usr/python/lib/tcl9.0"
 export TK_LIBRARY="$HERE/usr/python/lib/tk9.0"

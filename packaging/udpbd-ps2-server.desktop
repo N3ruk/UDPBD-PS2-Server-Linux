@@ -8,4 +8,4 @@ Terminal=false
 Categories=Game;
 Keywords=PS2;PlayStation;OPL;UDPBD;
 StartupNotify=true
-StartupWMClass=UDPBD PS2 Server
+StartupWMClass=Udpbd-ps2-server
