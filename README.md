@@ -2,135 +2,109 @@
 
 # UDPBD PS2 Server · Linux
 
-Comparte tu carpeta de juegos de PlayStation 2 por red mediante **UDPBD v2**,
-con una interfaz gráfica sencilla para Linux. Compatible con clientes UDPBD
-como OPL y OSD-XMB/Neutrino que incorporen este protocolo.
+**English** | [Español](README_ES.md)
 
-## Por qué existe
+Share a PlayStation 2 game directory over **UDPBD v2** using a straightforward native Linux GUI. Works with UDPBD-capable clients such as compatible OPL and OSD-XMB/Neutrino builds.
 
-Este proyecto nace de la necesidad de disponer en Linux de un servidor UDPBD
-fácil de utilizar, sin depender de un ejecutable para Windows ni de preparar
-manualmente una unidad de disco. Seleccionas una carpeta, eliges la interfaz
-de red y pulsas **Iniciar servidor**.
+## Why it exists
 
-- Interfaz gráfica con inicio/parada, estado y tráfico en directo.
-- Comparte ISO sueltas, carpetas `DVD`/`CD` o una biblioteca con estructura OPL.
-- No copia los juegos ni modifica los archivos originales del ordenador.
-- Crea una unidad exFAT virtual y admite las escrituras temporales del cliente.
-- Muestra la IP que debes usar en tu PS2.
-- No necesita permisos de administrador para funcionar.
+This project provides an easy-to-use Linux UDPBD server without a Windows executable or a manually prepared disk. Select a directory, choose your network interface and press **Start server** (`Iniciar servidor`).
 
-## Descargar
+- Start/stop controls, live status and traffic monitoring.
+- Shares standalone ISOs, DVD/CD folders or an OPL library root.
+- Does not copy games or modify original files.
+- Presents a virtual exFAT drive with temporary client writes.
+- Shows the server IP to use on your PS2.
+- No administrator privileges required to run.
 
-**[Descargas de la última versión](https://github.com/N3ruk/UDPBD-PS2-Server-Linux/releases/latest)**
+## Download
 
-| Paquete | Uso |
+Get packages from the [latest release](https://github.com/N3ruk/UDPBD-PS2-Server-Linux/releases/latest).
+
+| Package | Purpose |
 | --- | --- |
-| `UDPBD-PS2-Server-1.0.0-x86_64.AppImage` | Ejecutar sin instalar Python, Tk ni el servidor. |
-| `udpbd-ps2-server_1.0.0_amd64.deb` | Instalación integrada en Ubuntu y en su menú de aplicaciones. |
+| `UDPBD-PS2-Server-1.0.0-x86_64.AppImage` | Portable; includes Python, Tk and the server |
+| `udpbd-ps2-server_1.0.0_amd64.deb` | Ubuntu installation with an application-menu entry |
 
-Ambos paquetes son **x86_64/amd64**, no ARM ni 32 bits. No se incluyen juegos.
+Both packages target **x86_64/amd64**, not ARM or 32-bit Linux. No games are included.
 
-### AppImage · sin instalación
+### AppImage
 
-En Propiedades del archivo, permite ejecutarlo como programa y ábrelo.
-También puedes ejecutarlo así:
+Allow execution in the file's Properties or run:
 
-```bash
+```sh
 chmod +x UDPBD-PS2-Server-1.0.0-x86_64.AppImage
 ./UDPBD-PS2-Server-1.0.0-x86_64.AppImage
 ```
 
-Incluye Python, Tcl/Tk, fuentes, interfaz y backend. Requiere Linux con glibc
-2.31 o posterior y una sesión gráfica X11 o Wayland con XWayland.
-Si tu distribución no tiene FUSE disponible, no necesitas instalarlo:
+Includes Python, Tcl/Tk, fonts, GUI and backend. Requires **glibc 2.31+** and X11, or Wayland with XWayland. If FUSE is unavailable, use:
 
-```bash
+```sh
 ./UDPBD-PS2-Server-1.0.0-x86_64.AppImage --appimage-extract-and-run
 ```
 
-No registra servicios ni instala archivos en el sistema.
+No services or system files are installed.
 
-### Ubuntu · paquete DEB
+### Ubuntu DEB
 
-Desde la carpeta donde lo descargaste:
-
-```bash
+```sh
 sudo apt install ./udpbd-ps2-server_1.0.0_amd64.deb
 ```
 
-`apt` instala automáticamente Python 3, Tk y las fuentes necesarias si faltan.
-Después abre **UDPBD PS2 Server** desde el menú de aplicaciones.
-Diseñado para Ubuntu 22.04 o posterior (amd64). La instalación, prueba y retirada
-del DEB se verifican en Ubuntu 22.04 mediante GitHub CI; la interfaz y la AppImage
-también se han comprobado en Ubuntu 26.04.1. No uses `dpkg -i` como sustituto de `apt` si faltan dependencias.
+APT resolves Python 3, Tk and font dependencies. Open **UDPBD PS2 Server** from the menu. Targets Ubuntu 22.04+ amd64. GitHub CI verifies DEB installation, testing and removal on Ubuntu 22.04; the GUI/AppImage were also checked on Ubuntu 26.04.1. Do not substitute `dpkg -i` for APT when dependencies are missing.
 
-## Usarlo con tu PS2
+## Use with your PS2
 
-1. Conecta el PC y la PS2 a la misma red; se recomienda Ethernet.
-2. Abre la aplicación y selecciona la carpeta de juegos.
-3. Elige la IP/interfaz conectada a la PS2, especialmente si también tienes Wi-Fi.
-4. Pulsa **Iniciar servidor** y espera a que aparezca el estado activo.
-5. En tu cargador de PS2, utiliza el modo UDPBD y, si solicita una IP de servidor,
-   escribe la que muestra la aplicación. El servicio usa **UDP 48573**.
-6. Consulta el tráfico en directo y pulsa **Parar servidor** cuando termines.
+1. Connect the computer and PS2 to the same network, preferably Ethernet.
+2. Open the application and select your games directory.
+3. Select the IP/interface connected to the PS2, particularly if Wi-Fi is also active.
+4. Press **Iniciar servidor** and wait for the active status.
+5. Select UDPBD mode in your PS2 loader and enter the displayed server IP if requested. The service uses **UDP port 48573**.
+6. Monitor traffic and press **Parar servidor** when finished.
 
-Puedes seleccionar directamente `DVD`, `CD`, una carpeta con ISO sueltas o la
-raíz de tu biblioteca OPL. Mantén los archivos sin cambios mientras compartes.
-No hace falta formatear, montar ni dedicar una partición al servidor.
+You may select DVD, CD, a directory of ISOs or the OPL root. Keep shared files unchanged while running. No dedicated partition, formatting or manual mounting is required.
 
-### Qué significa escritura temporal
+### Temporary writes
 
-El cliente puede escribir en la unidad virtual mientras el servidor está activo,
-pero esos cambios **se descartan al parar o cerrar**. Las ISO originales permanecen
-intactas. **No uses este modo para guardar partidas VMC que quieras conservar
-entre sesiones**: guarda en una Memory Card física u otro almacenamiento persistente.
-No hay modo de importación ni copia permanente de la biblioteca.
+The client can write to the virtual drive while the server is active, but changes are **discarded when it stops or closes**. Original ISOs remain unchanged. **Do not use this mode for VMC saves that must survive between sessions**: use a physical memory card or other persistent storage. There is no permanent library import/copy mode.
 
-## Si no aparece la lista de juegos
+## Troubleshooting
 
-- Comprueba que el cargador de PS2 incorpora soporte UDPBD v2; no es SMB.
-- Revisa la interfaz seleccionada y que ambas máquinas estén en la misma subred.
-- Si hay un cortafuegos activo, permite UDP 48573 desde tu red local.
-- Cierra otra instancia del servidor que pueda estar ocupando el puerto.
-- Mira el registro de la propia ventana para identificar errores de archivos o red.
+- Confirm the PS2 loader supports UDPBD v2; this is not SMB.
+- Check the interface and ensure both devices are in the same subnet.
+- If a firewall is enabled, allow UDP 48573 from your local network.
+- Close another server instance that might occupy the port.
+- Inspect the application's log for network/file errors.
 
-No se modifica el cortafuegos automáticamente. El programa no descarga juegos
-ni necesita acceder a Internet para compartirlos.
+The application does not automatically change the firewall, download games or require Internet access to share files.
 
-## Comprobar y desinstalar
+## Check and uninstall
 
-La aplicación incluye una prueba opcional de interfaz y UDP sobre archivos
-ficticios y loopback. Requiere una sesión gráfica; no contacta con la PS2:
+The optional GUI/UDP self-test uses synthetic files and loopback, not your PS2. It requires a graphical session:
 
-```bash
+```sh
 udpbd-ps2-server --self-test
-# O con AppImage:
+# Or:
 ./UDPBD-PS2-Server-1.0.0-x86_64.AppImage --self-test
 ```
 
-Para retirar la instalación Ubuntu:
+Remove the Ubuntu package with:
 
-```bash
+```sh
 sudo apt purge udpbd-ps2-server
 ```
 
-Para retirar la AppImage basta con borrar su archivo. Tus juegos nunca se borran.
-Las preferencias están en `~/.config/udpbd-ubuntu/` y los registros locales en
-`~/.local/state/udpbd-ubuntu/`; puedes borrarlos por separado si ya no los necesitas.
+For AppImage, delete its file. Games are never removed. Preferences are in `~/.config/udpbd-ubuntu/` and local logs in `~/.local/state/udpbd-ubuntu/`; remove those separately if desired.
 
-## Código y construcción
+## Source and build
 
-Python 3.10+, Tk y un compilador C++17 permiten ejecutar desde fuentes:
+Python 3.10+, Tk and a C++17 compiler are needed to run from source:
 
-```bash
+```sh
 make
 python3 main.py
 ```
 
-Para generar los dos paquetes: `python3 packaging/build.py`.
-Necesitas Python 3, `make`, `dpkg-deb`, `tar`, `xz`, `strip` y acceso a Internet
-para la primera descarga de las herramientas fijadas en
-`packaging/toolchain-lock.json`. No se instala ninguna herramienta globalmente.
+Build both packages with `python3 packaging/build.py`. Requires Python 3, `make`, `dpkg-deb`, `tar`, `xz`, `strip` and Internet access for the first download of hash-pinned tools from `packaging/toolchain-lock.json`. No global tool installation is performed.
 
-[Créditos y licencias](NOTICE.md).
+[Credits and licenses](NOTICE.md) · [Créditos en español](NOTICE_ES.md).
