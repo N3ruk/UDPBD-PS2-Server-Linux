@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=UDPBD PS2 Server
+Comment=Comparte tus juegos de PS2 por red desde Linux
+Exec=udpbd-ps2-server
+Icon=udpbd-ps2-server
+Terminal=false
+Categories=Game;
+Keywords=PS2;PlayStation;OPL;UDPBD;
+StartupNotify=true
+StartupWMClass=UDPBD PS2 Server

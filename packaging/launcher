@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /usr/bin/python3 -B -E -s /usr/share/udpbd-ps2-server/main.py "$@"

@@ -1,0 +1,29 @@
+name: Build and verify Linux packages
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  package:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install build and GUI-test requirements
+        run: sudo apt-get update && sudo apt-get install -y python3-tk xvfb xauth binutils xz-utils zstd
+      - name: Build DEB and AppImage
+        run: python3 packaging/build.py
+      - name: Protocol and virtual disk tests
+        run: make test
+      - name: Packaged AppImage GUI and UDP test without FUSE
+        run: xvfb-run -a dist/UDPBD-PS2-Server-1.0.0-x86_64.AppImage --appimage-extract-and-run --self-test
+      - name: DEB installation, test and removal
+        run: |
+          sudo apt-get install -y ./dist/udpbd-ps2-server_1.0.0_amd64.deb
+          xvfb-run -a udpbd-ps2-server --self-test
+          sudo apt-get purge -y udpbd-ps2-server
+      - uses: actions/upload-artifact@v4
+        with:
+          name: UDPBD-PS2-Server-Linux-x86_64
+          path: dist/*

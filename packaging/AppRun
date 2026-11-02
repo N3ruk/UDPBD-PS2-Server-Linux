@@ -1,0 +1,9 @@
+#!/bin/sh
+set -eu
+HERE=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+unset PYTHONHOME PYTHONPATH TCL_LIBRARY TK_LIBRARY
+export TCL_LIBRARY="$HERE/usr/python/lib/tcl9.0"
+export TK_LIBRARY="$HERE/usr/python/lib/tk9.0"
+export FONTCONFIG_FILE="$HERE/usr/share/udpbd-ps2-server/assets/fonts.conf"
+export FONTCONFIG_PATH="$HERE/usr/share/udpbd-ps2-server/assets"
+exec "$HERE/usr/python/bin/python3" -B -E -s "$HERE/usr/share/udpbd-ps2-server/main.py" "$@"
