@@ -61,8 +61,9 @@ sudo apt install ./udpbd-ps2-server_1.0.0_amd64.deb
 
 `apt` instala automáticamente Python 3, Tk y las fuentes necesarias si faltan.
 Después abre **UDPBD PS2 Server** desde el menú de aplicaciones.
-Diseñado para Ubuntu 22.04 o posterior (amd64); comprobado mediante instalación
-real en Ubuntu 26.04.1. No uses `dpkg -i` como sustituto de `apt` si faltan dependencias.
+Diseñado para Ubuntu 22.04 o posterior (amd64). La instalación, prueba y retirada
+del DEB se verifican en Ubuntu 22.04 mediante GitHub CI; la interfaz y la AppImage
+también se han comprobado en Ubuntu 26.04.1. No uses `dpkg -i` como sustituto de `apt` si faltan dependencias.
 
 ## Usarlo con tu PS2
 
